@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Dropdown = ({ options, onSelect, selection }) => {
+const Dropdown = ({ options, onChange, value }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => {
@@ -9,7 +9,7 @@ const Dropdown = ({ options, onSelect, selection }) => {
 
   const handleOptionClick = (option) => {
     setIsOpen(false);
-    onSelect(option);
+    onChange(option);
   };
 
   const renderedOptions = options.map((option) => {
@@ -20,14 +20,15 @@ const Dropdown = ({ options, onSelect, selection }) => {
     );
   });
 
-  let content = "Select...";
-  if (selection) {
-    content = selection.label;
-  }
+  // let content = "Select...";
+  // if (value) {
+  //   content = value.label;
+  // }
+  //! JSX içerisindeki seçim yaptığımız div'e bunu koymuştuk, ancak onun yerine JS özelliği olan bu kısa yazımı elde ettik.
 
   return (
     <div>
-      <div onClick={handleClick}>{content}</div>
+      <div onClick={handleClick}>{value?.label || "Select..."}</div>
       {isOpen && <div>{renderedOptions}</div>}
     </div>
   );
