@@ -1,13 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GoChevronDown } from "react-icons/go";
 import Panel from "./Panel";
 
 const Dropdown = ({ options, onChange, value }) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const divEl = useRef();
+
   useEffect(() => {
     const handler = (event) => {
-      console.log(event.target);
+      if (!divEl.current) {
+        return;
+      }
+
+      if (!divEl.current.contains(event.target)) {
+        setIsOpen(false);
+      }
     };
 
     document.addEventListener("click", handler, true);
@@ -45,7 +53,7 @@ const Dropdown = ({ options, onChange, value }) => {
   //! JSX içerisindeki seçim yaptığımız div'e bunu koymuştuk, ancak onun yerine JS özelliği olan bu kısa yazımı elde ettik.
 
   return (
-    <div className="w-48 relative">
+    <div ref={divEl} className="w-48 relative">
       <Panel
         className="flex justify-between item-center cursor-pointer"
         onClick={handleClick}
