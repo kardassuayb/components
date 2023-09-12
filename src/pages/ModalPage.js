@@ -9,6 +9,24 @@ const ModalPage = () => {
     setShowModal(true);
   };
 
+  const handleClose = () => {
+    setShowModal(false);
+  };
+
+  const actionBar = (
+    <div>
+      <Button onClick={handleClose} primary rounded>
+        I Accept
+      </Button>
+    </div>
+  );
+
+  const modal = (
+    <Modal onClose={handleClose} actionBar={actionBar}>
+      Here is an important agreement for you to accept!
+    </Modal>
+  );
+
   return (
     <div>
       <div>
@@ -16,7 +34,7 @@ const ModalPage = () => {
           Open Modal
         </Button>
       </div>
-      {showModal && <Modal onClose={setShowModal} />}
+      {showModal && modal}
     </div>
   );
 };
