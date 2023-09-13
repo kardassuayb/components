@@ -1,5 +1,11 @@
+import { Fragment } from "react";
+//! Yukarıdaki bu özellik, "renderedHeaders" içerisindeki return değerine key prop'u aktarabilmek için kullandık. Başka hiç bir amacı yok. Zira tablo içerisinde HTML ögeleri(div, p vs.) kullanamıyoruz, dolayısıyla key propu verebileceğimiz bir öge de olamıyor.
+
 const Table = ({ data, config, keyFn }) => {
   const renderedHeaders = config.map((column) => {
+    if (column.header) {
+      return <Fragment key={column.label}>{column.header()}</Fragment>;
+    }
     return <th key={column.label}>{column.label}</th>;
   });
 
