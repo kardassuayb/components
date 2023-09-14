@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Table from "./Table";
+import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
 
 function SortableTable(props) {
   const { config, data } = props;
@@ -8,6 +9,12 @@ function SortableTable(props) {
   const [sortBy, setSortBy] = useState(null);
 
   const handleClick = (label) => {
+    if (sortBy && label !== sortBy) {
+      setSortOrder("asc");
+      setSortBy(label);
+      return;
+    }
+
     if (sortOrder === null) {
       setSortOrder("asc");
       setSortBy(label);
@@ -28,9 +35,14 @@ function SortableTable(props) {
     return {
       ...column,
       header: () => (
-        <th onClick={() => handleClick(column.label)}>
-          {getIcons(column.label, sortBy, sortOrder)}
-          {column.label}
+        <th
+          className="cursor-pointer hover:bg-gray-100"
+          onClick={() => handleClick(column.label)}
+        >
+          <div className="flex items-center">
+            {getIcons(column.label, sortBy, sortOrder)}
+            {column.label}
+          </div>
         </th>
       ),
     };
@@ -59,25 +71,38 @@ function SortableTable(props) {
     });
   }
 
-  return (
-    <div>
-      {sortBy} - {sortOrder}
-      <Table {...props} data={sortedData} config={updatedConfig} />
-    </div>
-  );
+  return <Table {...props} data={sortedData} config={updatedConfig} />;
 }
 
 function getIcons(label, sortBy, sortOrder) {
   if (label !== sortBy) {
-    return "two icon";
+    return (
+      <div>
+        <GoTriangleUp />
+        <GoTriangleDown />
+      </div>
+    );
   }
 
   if (sortOrder === null) {
-    return "two icon";
+    return (
+      <div>
+        <GoTriangleUp />
+        <GoTriangleDown />
+      </div>
+    );
   } else if (sortOrder === "asc") {
-    return "up icon";
+    return (
+      <div>
+        <GoTriangleUp />
+      </div>
+    );
   } else if (sortOrder === "desc") {
-    return "down icon";
+    return (
+      <div>
+        <GoTriangleDown />
+      </div>
+    );
   }
 }
 
