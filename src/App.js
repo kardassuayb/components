@@ -5,7 +5,6 @@ import DropdownPage from "./pages/DropdownPage";
 import ButtonPage from "./pages/ButtonPage";
 import ModalPage from "./pages/ModalPage";
 import TablePage from "./pages/TablePage";
-import CounterPage from "./pages/CounterPage";
 
 function App() {
   return (
